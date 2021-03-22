@@ -1,0 +1,420 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainRoutes matches snapshot 1`] = `
+<Connect(CoreLayout)
+  history={Object {}}
+  location={Object {}}
+  match={Object {}}
+>
+  <Switch>
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Login)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/"
+      path="/"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(LoadingDataPage)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/loading"
+      path="/loading"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Login)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/login"
+      path="/login"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(withRouter(RedirectClass))",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/sign-up"
+      path="/sign-up"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(withRouter(RedirectClass))",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/reset-password/:token?/:uid?"
+      path="/reset-password/:token?/:uid?"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(withRouter(RedirectClass))",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/set-password/:token/:uid"
+      path="/set-password/:token/:uid"
+    />
+    <Route
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(withRouter(RedirectClass))",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/session-limit"
+      path="/session-limit"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(HomePage)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/home"
+      path="/home"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Reports)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/reports"
+      path="/reports"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(YourDetails)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/your-account/your-details"
+      path="/your-account/your-details"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Billing)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/your-account/billing"
+      path="/your-account/billing"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Subscriptions)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/your-account/billing/subscriptions"
+      path="/your-account/billing/subscriptions"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(YourTeam)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/your-account/your-team"
+      path="/your-account/your-team"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Notifications)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/your-account/notifications"
+      path="/your-account/notifications"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(News)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/hub/news"
+      path="/hub/news"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(SingleNews)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/hub/news/:id"
+      path="/hub/news/:id"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Grid)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/hub/grid/:name?"
+      path="/hub/grid/:name?"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Wiki)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/hub/wiki/:termId?"
+      path="/hub/wiki/:termId?"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(CapacityMarket)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/markets/capacity"
+      path="/markets/capacity"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Balancing)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/markets/balancing/:name?"
+      path="/markets/balancing/:name?"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(withRouter(FirmFrequency))",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/markets/ffr"
+      path="/markets/ffr"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(DynamicContaintment)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/markets/dynamic-containment"
+      path="/markets/dynamic-containment"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Intraday)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/markets/intraday"
+      path="/markets/intraday"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Overview)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/markets/overview"
+      path="/markets/overview"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(OurTeam)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/about/our-team"
+      path="/about/our-team"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Partners)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/about/partners"
+      path="/about/partners"
+    />
+    <Connect(PrivateRoute)
+      component={[Function]}
+      exact={true}
+      key="/about/advisory-services"
+      path="/about/advisory-services"
+    />
+    <Connect(PrivateRoute)
+      component={[Function]}
+      exact={true}
+      key="/about/independence-data"
+      path="/about/independence-data"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Leaderboard)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/assets/leaderboard"
+      path="/assets/leaderboard"
+    />
+    <Connect(PrivateRoute)
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(Modomap)",
+          "type": [Function],
+        }
+      }
+      exact={true}
+      key="/assets/modomap"
+      path="/assets/modomap"
+    />
+    <Route
+      component={[Function]}
+      path="*"
+    />
+  </Switch>
+</Connect(CoreLayout)>
+`;

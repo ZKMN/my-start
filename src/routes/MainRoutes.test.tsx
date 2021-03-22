@@ -1,13 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import AppRootComponent from './AppRootComponent';
+import { MainRoutes } from './MainRoutes';
 
-let wrapper: any;
+let wrapper: JSX.Element;
 
-describe('AppRootComponent', () => {
+const props = {
+  location: {},
+  history: {},
+  match: {},
+};
+
+describe('MainRoutes', () => {
   beforeEach(() => {
-    wrapper = shallow(<AppRootComponent />);
+    wrapper = shallow(<MainRoutes {...props} />);
   });
 
   afterEach(() => {

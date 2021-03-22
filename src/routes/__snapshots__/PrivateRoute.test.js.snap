@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrivateRoute matches snapshot if !isLoggedIn && !user 1`] = `
+<Redirect
+  to={
+    Object {
+      "pathname": "/login",
+      "state": Object {
+        "redirectFrom": undefined,
+      },
+    }
+  }
+/>
+`;
+
+exports[`PrivateRoute matches snapshot if isLoggedIn && commonDataLoaded && user && !user.hasFullAccess 1`] = `
+<component
+  history={Object {}}
+  location={Object {}}
+  match={Object {}}
+/>
+`;
+
+exports[`PrivateRoute matches snapshot if isLoggedIn && user && !commonDataLoaded 1`] = `
+<Redirect
+  to={
+    Object {
+      "pathname": "/loading",
+      "state": Object {
+        "redirectFrom": undefined,
+        "redirectFromSearch": undefined,
+      },
+    }
+  }
+/>
+`;
