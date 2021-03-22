@@ -7,7 +7,7 @@ import {
 
 describe("createRequestActionTypes", () => {
   it("should return object with right action types", () => {
-    const requestActionTypesTest = createRequestActionTypes(XHRMethod.Get, "TEST");
+    const requestActionTypesTest = createRequestActionTypes(XHRMethod.Get, "TEST", true);
 
     expect(requestActionTypesTest).toEqual({
       REQUEST: `${XHRMethod.Get}_TEST_${RequestActionStatuses.Request}`,

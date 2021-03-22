@@ -9,7 +9,7 @@ import {
 } from "utils";
 import watchLastDeleteAction, { getSaga } from "./getSaga";
 
-const GET_ACTIONS = createRequestActionTypes(XHRMethod.Get, "ACTION");
+const GET_ACTIONS = createRequestActionTypes(XHRMethod.Get, "ACTION", true);
 const getRequest = createRequestAction(GET_ACTIONS, "/get");
 
 describe("getSaga", () => {

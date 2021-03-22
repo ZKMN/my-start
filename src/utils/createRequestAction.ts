@@ -1,9 +1,9 @@
 import { ICreateRequestActionTypes } from "./createRequestActionTypes";
+import { StringifiableRecord } from 'query-string';
 
 interface TActionCallbackResult {
-  type: string;
-  payload?: object;
-  meta?: object;
+  type: string | undefined;
+  payload?: Record<string, unknown>;
 }
 
 interface IRequestPayload {
@@ -12,20 +12,17 @@ interface IRequestPayload {
   [key: string]: unknown; 
 }
 
-type TActionCallback = (
-  successPayload: any,
-  successMeta?: object,
-) => TActionCallbackResult;
+type TActionCallback = (payload: any) => TActionCallbackResult;
 
 export interface IRequestAction {
-  type: string;
-  payload: any;
+  type: string | undefined;
+  payload: Record<string, unknown>;
   endpoint: string;
   responseType?: string;
-  queryParams?: Record<string, unknown>;
+  queryParams?: StringifiableRecord;
   routeParams?: Record<string, unknown>;
-  failureAction: TActionCallback;
-  successAction: TActionCallback;
+  successCallback: TActionCallback;
+  failureCallback?: TActionCallback;
 }
 
 export const createRequestAction = (
@@ -34,28 +31,28 @@ export const createRequestAction = (
   responseType?: string,
 ) => (
   requestPayload?: IRequestPayload,
-) => {
+): IRequestAction => {
 
   const { payload, routeParams, ...rest } = Object(requestPayload);
 
-  const failureAction = (failurePayload: any) => ({
+  const failureCallback = (payload: any) => ({
     type: actionType.FAILURE,
-    payload: failurePayload,
+    payload,
   });
-  const successAction = (successPayload: any) => ({
+  const successCallback = (payload: any) => ({
     type: actionType.SUCCESS,
-    payload: successPayload,
+    payload,
   });
 
   const action: IRequestAction = {
     type: actionType.REQUEST,
     queryParams: { ...rest },
     routeParams,
-    payload: requestPayload,
+    payload,
     endpoint: requestEndpoint,
     responseType,
-    failureAction,
-    successAction,
+    successCallback,
+    ...(actionType.FAILURE && { failureCallback }),
   };
 
   return action;

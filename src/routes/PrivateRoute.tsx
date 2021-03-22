@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 import { Pathnames } from 'links';
 
 interface IPrivateRoute extends RouteProps {
-  isLoggedIn: boolean;
-  user: Record<string, unknown>;
+  isLoggedIn?: boolean;
+  user?: Record<string, unknown>;
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 

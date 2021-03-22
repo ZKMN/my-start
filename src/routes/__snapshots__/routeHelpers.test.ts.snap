@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`routeHelpers matches snapshot routesConfig 1`] = `
+Object {
+  "privateRoutes": Array [
+    Object {
+      "component": [Function],
+      "path": "/",
+    },
+  ],
+  "publicRoutes": Array [
+    Object {
+      "component": [Function],
+      "path": "/",
+    },
+    Object {
+      "component": [Function],
+      "path": "/",
+    },
+  ],
+}
+`;
+
+exports[`routeHelpers testing getPrivateRoutes 1`] = `
+Array [
+  <Memo(Connect(PrivateRoute))
+    component="Profile"
+    exact={true}
+    path="/profile"
+  />,
+]
+`;
+
+exports[`routeHelpers testing getPublicRoutes 1`] = `
+Array [
+  <Route
+    component="SessionLimit"
+    exact={true}
+    path="/sessionLimit"
+  />,
+]
+`;

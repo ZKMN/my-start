@@ -7,39 +7,36 @@ import {} from 'containers';
 export const routesConfig = {
   privateRoutes: [{
     path: '/',
-    key: '/',
     component: () => <div />,
   }],
   publicRoutes: [{
     path: '/',
-    key: '/',
     component: () => <div />,
   }, {
     path: Pathnames.Login,
-    key: Pathnames.Login,
     component: () => <div />,
   }],
 };
 
 
 interface IRouter extends RouteProps {
-  key?: React.Key;
+  path: string;
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
-export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component, key }: IRouter) => (
+export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter) => (
   <Route
     exact
-    key={key}
+    key={path}
     path={path}
     component={component}
   />
 ));
 
-export const getPrivateRoutes = (routes: IRouter[]) => routes.map(({ path, component, key }: IRouter) => (
+export const getPrivateRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter) => (
   <ConnectedPrivateRoute
     exact
-    key={key}
+    key={path}
     path={path}
     component={component}
   />

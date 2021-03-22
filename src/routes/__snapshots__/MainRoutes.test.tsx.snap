@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainRoutes matches snapshot 1`] = `
+<CoreLayout
+  history={Object {}}
+  location={Object {}}
+  match={Object {}}
+>
+  <Switch>
+    <Route
+      component={[Function]}
+      exact={true}
+      key="/"
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      exact={true}
+      key="/"
+      path="/"
+    />
+    <Connect(PrivateRoute)
+      component={[Function]}
+      exact={true}
+      key="/"
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      path="*"
+    />
+  </Switch>
+</CoreLayout>
+`;

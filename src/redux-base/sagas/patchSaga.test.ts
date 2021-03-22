@@ -9,8 +9,8 @@ import {
 } from "utils";
 import watchLastDeleteAction, { patchSaga } from "./patchSaga";
 
-const PATCH_ACTION = createRequestActionTypes(XHRMethod.Patch, "ACTION");
-const patchRequest = createRequestAction(PATCH_ACTION, "/patch");
+const PATCH_ACTION = createRequestActionTypes(XHRMethod.Patch, "ACTION", true);
+const patchRequest = createRequestAction(PATCH_ACTION, "/patch/:id/");
 
 describe("patchSaga", () => {
   describe("watchLastDeleteAction", () => {
@@ -37,9 +37,9 @@ describe("patchSaga", () => {
 
   describe("testing patchSaga", () => {
     it("calls action.successCb", () => {
-      const gen = patchSaga(patchRequest({ id: 10 }));
+      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));;
 
-      expect(gen.next().value).toEqual(call(apiClient.patch, "/patch", { id: 10 }));
+      expect(gen.next().value).toEqual(call(apiClient.patch, "/patch/15/?query=10", { id: 10 }));
 
       expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
         "@@redux-saga/IO": true,
@@ -50,14 +50,13 @@ describe("patchSaga", () => {
           action: {
             type: PATCH_ACTION.SUCCESS,
             payload: { dataResponse: ["some data"] },
-            meta: undefined,
           },
         },
       });
     });
 
     it("fires error action if js error is thrown", () => {
-      const gen = patchSaga(patchRequest({ id: 10 }));
+      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
       gen.next();
 
@@ -78,7 +77,6 @@ describe("patchSaga", () => {
             payload: {
               message: "Something went wrong",
             },
-            meta: undefined,
           },
         },
       });
@@ -91,7 +89,7 @@ describe("patchSaga", () => {
         },
       };
 
-      const gen = patchSaga(patchRequest({ id: 10 }));
+      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
       gen.next();
 
@@ -108,7 +106,6 @@ describe("patchSaga", () => {
                 data: "some data",
               },
             },
-            meta: undefined,
           },
         },
       });

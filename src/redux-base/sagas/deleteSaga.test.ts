@@ -9,8 +9,8 @@ import {
 } from "utils";
 import watchLastDeleteAction, { deleteSaga } from "./deleteSaga";
 
-const DELETE_ACTION = createRequestActionTypes(XHRMethod.Delete, "ACTION");
-const deleteRequest = createRequestAction(DELETE_ACTION, "/delete");
+const DELETE_ACTION = createRequestActionTypes(XHRMethod.Delete, "ACTION", true);
+const deleteRequest = createRequestAction(DELETE_ACTION, "/delete/:id/");
 
 describe("deleteSaga", () => {
   describe("watchLastDeleteAction", () => {
@@ -37,9 +37,9 @@ describe("deleteSaga", () => {
 
   describe("testing deleteSaga", () => {
     it("calls action.successCb", () => {
-      const gen = deleteSaga(deleteRequest({ id: 10 }));
+      const gen = deleteSaga(deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
-      expect(gen.next().value).toEqual(call(apiClient.delete, "/delete", { id: 10 }));
+      expect(gen.next().value).toEqual(call(apiClient.delete, "/delete/15/?query=10", { id: 10 }));
 
       expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
         "@@redux-saga/IO": true,
@@ -50,14 +50,13 @@ describe("deleteSaga", () => {
           action: {
             type: DELETE_ACTION.SUCCESS,
             payload: { dataResponse: ["some data"] },
-            meta: undefined,
           },
         },
       });
     });
 
     it("fires error action if js error is thrown", () => {
-      const gen = deleteSaga(deleteRequest({ id: 10 }));
+      const gen = deleteSaga(deleteRequest({ routeParams: { id: 15 }, id: 10 }));
 
       gen.next();
 
@@ -78,7 +77,6 @@ describe("deleteSaga", () => {
             payload: {
               message: "Something went wrong",
             },
-            meta: undefined,
           },
         },
       });
@@ -91,7 +89,7 @@ describe("deleteSaga", () => {
         },
       };
 
-      const gen = deleteSaga(deleteRequest({ id: 10 }));
+      const gen = deleteSaga(deleteRequest({ routeParams: { id: 15 }, id: 10 }));
 
       gen.next();
 
@@ -108,7 +106,6 @@ describe("deleteSaga", () => {
                 data: "some data",
               },
             },
-            meta: undefined,
           },
         },
       });

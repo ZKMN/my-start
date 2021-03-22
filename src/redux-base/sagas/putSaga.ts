@@ -6,12 +6,16 @@ import { IRequestAction, putActions, addParamsToURL } from "utils";
 
 export function* putSaga(action: IRequestAction) {
   try {
-    const url = addParamsToURL(action, action.endpoint);
-    const response = yield call(apiClient.put, url, action.payload);
+    const url = addParamsToURL(action);
+    const response: unknown = yield call(apiClient.put, url, action.payload);
 
-    yield put(action.successAction(response));
+    yield put(action.successCallback(response));
   } catch (error) {
-    yield put(action.failureAction(error));
+    if (action.failureCallback) {
+      yield put(action.failureCallback(error));
+    } else {
+      yield put(showError(error));
+    }
   }
 }
 

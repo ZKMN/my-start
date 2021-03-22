@@ -9,8 +9,8 @@ import {
 } from "utils";
 import watchLastDeleteAction, { putSaga } from "./putSaga";
 
-const PUT_ACTION = createRequestActionTypes(XHRMethod.Put, "ACTION");
-const putRequest = createRequestAction(PUT_ACTION, "/put");
+const PUT_ACTION = createRequestActionTypes(XHRMethod.Put, "ACTION", true);
+const putRequest = createRequestAction(PUT_ACTION, "/put/:id/");
 
 describe("putSaga", () => {
   describe("watchLastDeleteAction", () => {
@@ -37,9 +37,9 @@ describe("putSaga", () => {
 
   describe("testing putSaga", () => {
     it("calls action.successCb", () => {
-      const gen = putSaga(putRequest({ id: 10 }));
+      const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
-      expect(gen.next().value).toEqual(call(apiClient.put, "/put", { id: 10 }));
+      expect(gen.next().value).toEqual(call(apiClient.put, "/put/15/?query=10", { id: 10 }));
 
       expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
         "@@redux-saga/IO": true,
@@ -50,14 +50,13 @@ describe("putSaga", () => {
           action: {
             type: PUT_ACTION.SUCCESS,
             payload: { dataResponse: ["some data"] },
-            meta: undefined,
           },
         },
       });
     });
 
     it("fires error action if js error is thrown", () => {
-      const gen = putSaga(putRequest({ id: 10 }));
+      const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
       gen.next();
 
@@ -78,7 +77,6 @@ describe("putSaga", () => {
             payload: {
               message: "Something went wrong",
             },
-            meta: undefined,
           },
         },
       });
@@ -91,7 +89,7 @@ describe("putSaga", () => {
         },
       };
 
-      const gen = putSaga(putRequest({ id: 10 }));
+      const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
       gen.next();
 
@@ -108,7 +106,6 @@ describe("putSaga", () => {
                 data: "some data",
               },
             },
-            meta: undefined,
           },
         },
       });
