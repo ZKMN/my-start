@@ -3,7 +3,7 @@ import {
   Route,
   Redirect,
   RouteProps,
-  RouteComponentProps
+  RouteComponentProps,
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Pathnames } from 'links';

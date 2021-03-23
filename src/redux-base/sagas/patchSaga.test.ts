@@ -21,11 +21,7 @@ describe("patchSaga", () => {
     });
 
     it("throw error", () => {
-      const error = {
-        response: {
-          data: "some data",
-        },
-      };
+      const error = { response: { data: "some data" } };
 
       const gen = watchLastDeleteAction();
 
@@ -37,7 +33,7 @@ describe("patchSaga", () => {
 
   describe("testing patchSaga", () => {
     it("calls action.successCb", () => {
-      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));;
+      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
       expect(gen.next().value).toEqual(call(apiClient.patch, "/patch/15/?query=10", { id: 10 }));
 
@@ -63,9 +59,7 @@ describe("patchSaga", () => {
       gen.next();
 
       expect(
-        gen.throw({
-          message: "Something went wrong",
-        }).value,
+        gen.throw({ message: "Something went wrong" }).value,
       ).toEqual({
         "@@redux-saga/IO": true,
         combinator: false,
@@ -74,20 +68,14 @@ describe("patchSaga", () => {
           channel: undefined,
           action: {
             type: PATCH_ACTION.FAILURE,
-            payload: {
-              message: "Something went wrong",
-            },
+            payload: { message: "Something went wrong" },
           },
         },
       });
     });
 
     it("returns error when js error is thrown with response", () => {
-      const error = {
-        response: {
-          data: "some data",
-        },
-      };
+      const error = { response: { data: "some data" } };
 
       const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
@@ -101,11 +89,7 @@ describe("patchSaga", () => {
           channel: undefined,
           action: {
             type: PATCH_ACTION.FAILURE,
-            payload: {
-              response: {
-                data: "some data",
-              },
-            },
+            payload: { response: { data: "some data" } },
           },
         },
       });

@@ -1,5 +1,5 @@
 import { ICreateRequestActionTypes } from "./createRequestActionTypes";
-import { StringifiableRecord } from 'query-string';
+import { StringifiableRecord } from "query-string";
 
 interface TActionCallbackResult {
   type: string | undefined;
@@ -44,7 +44,7 @@ export const createRequestAction = (
     payload,
   });
 
-  const action: IRequestAction = {
+  const action: IRequestAction = { 
     type: actionType.REQUEST,
     queryParams: { ...rest },
     routeParams,
@@ -52,7 +52,7 @@ export const createRequestAction = (
     endpoint: requestEndpoint,
     responseType,
     successCallback,
-    ...(actionType.FAILURE && { failureCallback }),
+    ...(actionType.FAILURE && { failureCallback }), 
   };
 
   return action;

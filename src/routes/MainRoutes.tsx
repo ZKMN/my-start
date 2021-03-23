@@ -1,8 +1,7 @@
-import React from 'react';
 import {
   Route,
   Switch,
-  RouteComponentProps
+  RouteChildrenProps,
 } from 'react-router-dom';
 import { ConnectedCoreLayout } from 'containers';
 import { NotFoundPage } from 'components';
@@ -16,7 +15,7 @@ export const MainRoutes = ({
   location,
   history,
   match,
-}: RouteComponentProps) => (
+}: RouteChildrenProps) => (
   <ConnectedCoreLayout
     location={location}
     history={history}

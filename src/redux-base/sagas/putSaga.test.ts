@@ -21,11 +21,7 @@ describe("putSaga", () => {
     });
 
     it("throw error", () => {
-      const error = {
-        response: {
-          data: "some data",
-        },
-      };
+      const error = { response: { data: "some data" } };
 
       const gen = watchLastDeleteAction();
 
@@ -62,11 +58,7 @@ describe("putSaga", () => {
 
       gen.next();
 
-      expect(
-        gen.throw({
-          message: "Something went wrong",
-        }).value,
-      ).toEqual({
+      expect(gen.throw({ message: "Something went wrong" }).value).toEqual({
         "@@redux-saga/IO": true,
         combinator: false,
         type: "PUT",
@@ -74,20 +66,14 @@ describe("putSaga", () => {
           channel: undefined,
           action: {
             type: PUT_ACTION.FAILURE,
-            payload: {
-              message: "Something went wrong",
-            },
+            payload: { message: "Something went wrong" },
           },
         },
       });
     });
 
     it("returns error when js error is thrown with response", () => {
-      const error = {
-        response: {
-          data: "some data",
-        },
-      };
+      const error = { response: { data: "some data" } };
 
       const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
@@ -101,11 +87,7 @@ describe("putSaga", () => {
           channel: undefined,
           action: {
             type: PUT_ACTION.FAILURE,
-            payload: {
-              response: {
-                data: "some data",
-              },
-            },
+            payload: { response: { data: "some data" } },
           },
         },
       });

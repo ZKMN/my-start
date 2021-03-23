@@ -23,7 +23,7 @@ export const createRequestActionTypes = (method: XHRMethod, actionName: string, 
   const actionTypes = {
     REQUEST: `${createRequestActionType(method, actionName)}_${RequestActionStatuses.Request}`,
     SUCCESS: `${createRequestActionType(method, actionName)}_${RequestActionStatuses.Success}`,
-    ...(addFailureType && { FAILURE: `${createRequestActionType(method, actionName)}_${RequestActionStatuses.Failure}` })
+    ...(addFailureType && { FAILURE: `${createRequestActionType(method, actionName)}_${RequestActionStatuses.Failure}` }),
   }
 
   return actionTypes;

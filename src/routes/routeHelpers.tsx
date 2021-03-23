@@ -18,16 +18,15 @@ export const routesConfig = {
   }],
 };
 
-
 interface IRouter extends RouteProps {
   path: string;
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
-export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter) => (
+export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter, index) => (
   <Route
     exact
-    key={path}
+    key={index}
     path={path}
     component={component}
   />

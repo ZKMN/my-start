@@ -8,7 +8,7 @@ const props = {
   component: () => <div />,
   path: '/',
   isLoggedIn: false,
-  user: {}
+  user: {},
 };
 
 describe('PrivateRoute', () => {

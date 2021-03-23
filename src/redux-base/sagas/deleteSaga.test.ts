@@ -1,31 +1,27 @@
-import { takeLatest, put, call } from "redux-saga/effects";
-import apiClient from "api/apiClient";
-import { showError } from "redux-base/actions";
+import { takeLatest, put, call } from 'redux-saga/effects';
+import apiClient from 'api/apiClient';
+import { showError } from 'redux-base/actions';
 import {
   createRequestActionTypes,
   createRequestAction,
   deleteActions,
   XHRMethod,
-} from "utils";
-import watchLastDeleteAction, { deleteSaga } from "./deleteSaga";
+} from 'utils';
+import watchLastDeleteAction, { deleteSaga } from './deleteSaga';
 
-const DELETE_ACTION = createRequestActionTypes(XHRMethod.Delete, "ACTION", true);
-const deleteRequest = createRequestAction(DELETE_ACTION, "/delete/:id/");
+const DELETE_ACTION = createRequestActionTypes(XHRMethod.Delete, 'ACTION', true);
+const deleteRequest = createRequestAction(DELETE_ACTION, '/delete/:id/');
 
-describe("deleteSaga", () => {
-  describe("watchLastDeleteAction", () => {
-    it("listens deleteSaga", () => {
+describe('deleteSaga', () => {
+  describe('watchLastDeleteAction', () => {
+    it('listens deleteSaga', () => {
       const gen = watchLastDeleteAction();
 
       expect(gen.next().value).toEqual(takeLatest(deleteActions, deleteSaga));
     });
 
-    it("throw error", () => {
-      const error = {
-        response: {
-          data: "some data",
-        },
-      };
+    it('throw error', () => {
+      const error = { response: { data: 'some data' } };
 
       const gen = watchLastDeleteAction();
 
@@ -35,27 +31,27 @@ describe("deleteSaga", () => {
     });
   });
 
-  describe("testing deleteSaga", () => {
-    it("calls action.successCb", () => {
+  describe('testing deleteSaga', () => {
+    it('calls action.successCb', () => {
       const gen = deleteSaga(deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
 
-      expect(gen.next().value).toEqual(call(apiClient.delete, "/delete/15/?query=10", { id: 10 }));
+      expect(gen.next().value).toEqual(call(apiClient.delete, '/delete/15/?query=10', { id: 10 }));
 
-      expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
-        "@@redux-saga/IO": true,
+      expect(gen.next({ dataResponse: ['some data'] }).value).toEqual({
+        '@@redux-saga/IO': true,
         combinator: false,
-        type: "PUT",
+        type: 'PUT',
         payload: {
           channel: undefined,
           action: {
             type: DELETE_ACTION.SUCCESS,
-            payload: { dataResponse: ["some data"] },
+            payload: { dataResponse: ['some data'] },
           },
         },
       });
     });
 
-    it("fires error action if js error is thrown", () => {
+    it('fires error action if js error is thrown', () => {
       const gen = deleteSaga(deleteRequest({ routeParams: { id: 15 }, id: 10 }));
 
       gen.next();
@@ -63,49 +59,37 @@ describe("deleteSaga", () => {
       gen.next();
 
       expect(
-        gen.throw({
-          message: "Something went wrong",
-        }).value,
+        gen.throw({ message: 'Something went wrong' }).value,
       ).toEqual({
-        "@@redux-saga/IO": true,
+        '@@redux-saga/IO': true,
         combinator: false,
-        type: "PUT",
+        type: 'PUT',
         payload: {
           channel: undefined,
           action: {
             type: DELETE_ACTION.FAILURE,
-            payload: {
-              message: "Something went wrong",
-            },
+            payload: { message: 'Something went wrong' },
           },
         },
       });
     });
 
-    it("returns error when js error is thrown with response", () => {
-      const error = {
-        response: {
-          data: "some data",
-        },
-      };
+    it('returns error when js error is thrown with response', () => {
+      const error = { response: { data: 'some data' } };
 
       const gen = deleteSaga(deleteRequest({ routeParams: { id: 15 }, id: 10 }));
 
       gen.next();
 
       expect(gen.throw(error).value).toEqual({
-        "@@redux-saga/IO": true,
+        '@@redux-saga/IO': true,
         combinator: false,
-        type: "PUT",
+        type: 'PUT',
         payload: {
           channel: undefined,
           action: {
             type: DELETE_ACTION.FAILURE,
-            payload: {
-              response: {
-                data: "some data",
-              },
-            },
+            payload: { response: { data: 'some data' } },
           },
         },
       });

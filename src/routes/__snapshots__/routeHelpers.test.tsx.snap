@@ -24,7 +24,7 @@ Object {
 exports[`routeHelpers testing getPrivateRoutes 1`] = `
 Array [
   <Memo(Connect(PrivateRoute))
-    component="Profile"
+    component={[Function]}
     exact={true}
     path="/profile"
   />,
@@ -34,7 +34,7 @@ Array [
 exports[`routeHelpers testing getPublicRoutes 1`] = `
 Array [
   <Route
-    component="SessionLimit"
+    component={[Function]}
     exact={true}
     path="/sessionLimit"
   />,

@@ -1,11 +1,10 @@
-import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { MainRoutes } from './MainRoutes';
 
-let wrapper: JSX.Element;
+let wrapper: any;
 
-const props = {
+const props: any = {
   location: {},
   history: {},
   match: {},
