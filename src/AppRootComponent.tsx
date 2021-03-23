@@ -6,10 +6,12 @@ import { ConnectedRouter } from 'connected-react-router';
 import { configureStore } from './redux-base/configureStore';
 import { MainRoutes } from './routes/MainRoutes';
 
-export const history = createBrowserHistory();
-export const store = configureStore(history);
+const history = createBrowserHistory();
+const store = configureStore(history);
 
-const AppRootComponent = () => (
+export type RootState = ReturnType<typeof store.getState>;
+
+export const AppRootComponent = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Route
@@ -24,5 +26,3 @@ const AppRootComponent = () => (
     </ConnectedRouter>
   </Provider>
 );
-
-export default AppRootComponent;

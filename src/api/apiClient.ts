@@ -4,11 +4,7 @@ import { config } from "config";
 const apiClient = axios.create({
   timeout: config.api.timeout,
   baseURL: config.api.url,
-  headers: {
-    Authorization: " ",
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
+  headers: {},
 });
 
 apiClient.interceptors.request.use((requestConfig) => requestConfig);

@@ -5,10 +5,7 @@ import { Pathnames } from 'links';
 import {} from 'containers';
 
 export const routesConfig = {
-  privateRoutes: [{
-    path: '/',
-    component: () => <div />,
-  }],
+  privateRoutes: [],
   publicRoutes: [{
     path: '/',
     component: () => <div />,
