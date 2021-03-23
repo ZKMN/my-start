@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { Route } from 'react-router';
 import { createBrowserHistory } from "history";
 import { ConnectedRouter } from 'connected-react-router';
+
 import { configureStore } from './redux-base/configureStore';
 import { MainRoutes } from './routes/MainRoutes';
 

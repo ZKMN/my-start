@@ -27,7 +27,7 @@ export interface IRequestAction {
 
 export const createRequestAction = (
   actionType: ICreateRequestActionTypes,
-  requestEndpoint: string,
+  endpoint: string,
   responseType?: string,
 ) => (
   requestPayload?: IRequestPayload,
@@ -49,7 +49,7 @@ export const createRequestAction = (
     queryParams: { ...rest },
     routeParams,
     payload,
-    endpoint: requestEndpoint,
+    endpoint,
     responseType,
     successCallback,
     ...(actionType.FAILURE && { failureCallback }), 

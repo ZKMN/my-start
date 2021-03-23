@@ -3,8 +3,10 @@ import {
   Switch,
   RouteChildrenProps,
 } from 'react-router-dom';
+
 import { ConnectedCoreLayout } from 'containers';
 import { NotFoundPage } from 'components';
+
 import {
   routesConfig,
   getPublicRoutes,

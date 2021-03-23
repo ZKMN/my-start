@@ -6,9 +6,9 @@ export const useMemoState = (defState: any) => {
   const [state, setState] = useState(defState)
 
   const smartSetState = (newState: any) => {
-    const idDifferenceState = isEqual(state, newState);
+    const areEqual = isEqual(state, newState);
     
-    if(!idDifferenceState){
+    if(!areEqual){
       setState(newState)
     }
   }

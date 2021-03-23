@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Route,
   Redirect,
   RouteProps,
   RouteComponentProps,
 } from 'react-router-dom';
-import { connect } from 'react-redux';
+
 import { Pathnames } from 'links';
 
 interface IPrivateRoute extends RouteProps {

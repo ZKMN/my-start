@@ -1,17 +1,22 @@
 import React from 'react';
-import { Route, RouteProps, RouteComponentProps } from 'react-router-dom';
+import {
+  Route,
+  RouteProps,
+  RouteComponentProps, 
+} from 'react-router-dom';
+
 import ConnectedPrivateRoute from './PrivateRoute';
-import { Pathnames } from 'links';
 import {} from 'containers';
+import { Pathnames } from 'links';
 
 export const routesConfig = {
   privateRoutes: [],
   publicRoutes: [{
     path: '/',
-    component: () => <div />,
+    component: () => <div>Login page</div>,
   }, {
     path: Pathnames.Login,
-    component: () => <div />,
+    component: () => <div>Login page</div>,
   }],
 };
 
@@ -20,10 +25,10 @@ interface IRouter extends RouteProps {
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
-export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter, index) => (
+export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter) => (
   <Route
     exact
-    key={index}
+    key={path}
     path={path}
     component={component}
   />

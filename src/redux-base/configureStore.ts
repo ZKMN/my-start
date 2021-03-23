@@ -3,15 +3,27 @@ import createSagaMiddleware from "redux-saga";
 import { routerMiddleware } from "react-router-redux";
 import { BrowserHistory } from "history";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
+
+import { LOGOUT } from './actions';
 import rootSaga from "./sagas/rootSaga";
-import createRootReducer from "./reducers/rootReducer";
+import rootReducer from "./reducers/rootReducer";
 
 export const configureStore = (history: BrowserHistory) => {
   const sagaMiddleware = createSagaMiddleware();
   const reduxRouterMiddleware = routerMiddleware(history);
-  const rootReducer = createRootReducer(history);
+
+  let createRootReducer = rootReducer(history);
+
+  createRootReducer = (state, action) => {
+    if (action.type === LOGOUT) {
+      return rootReducer(history)(undefined, action);
+    }
+
+    return rootReducer(history)(state, action);
+  };
+
   const store = createStore(
-    rootReducer,
+    createRootReducer,
     composeWithDevTools(
       applyMiddleware(
         reduxRouterMiddleware,
