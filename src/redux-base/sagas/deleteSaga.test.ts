@@ -2,14 +2,14 @@ import { takeLatest, put, call } from 'redux-saga/effects';
 import apiClient from 'api/apiClient';
 import { showError } from 'redux-base/actions';
 import {
-  createRequestActionTypes,
+  createActionType,
   createRequestAction,
   deleteActions,
   XHRMethod,
 } from 'utils';
 import watchLastDeleteAction, { deleteSaga } from './deleteSaga';
 
-const DELETE_ACTION = createRequestActionTypes(XHRMethod.Delete, 'ACTION', true);
+const DELETE_ACTION = createActionType(XHRMethod.Delete, 'ACTION', true);
 const deleteRequest = createRequestAction(DELETE_ACTION, '/delete/:id/');
 
 describe('deleteSaga', () => {
@@ -45,7 +45,7 @@ describe('deleteSaga', () => {
           channel: undefined,
           action: {
             type: DELETE_ACTION.SUCCESS,
-            payload: { dataResponse: ['some data'] },
+            data: { dataResponse: ['some data'] },
           },
         },
       });
@@ -68,7 +68,7 @@ describe('deleteSaga', () => {
           channel: undefined,
           action: {
             type: DELETE_ACTION.FAILURE,
-            payload: { message: 'Something went wrong' },
+            data: { message: 'Something went wrong' },
           },
         },
       });
@@ -89,7 +89,7 @@ describe('deleteSaga', () => {
           channel: undefined,
           action: {
             type: DELETE_ACTION.FAILURE,
-            payload: { response: { data: 'some data' } },
+            data: { response: { data: 'some data' } },
           },
         },
       });

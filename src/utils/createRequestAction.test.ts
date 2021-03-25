@@ -1,30 +1,30 @@
-import { createRequestAction } from "./createRequestAction";
 import {
-  createRequestActionTypes,
   XHRMethod,
-} from "./createRequestActionTypes";
+  createActionType,
+  createRequestAction, 
+} from "utils";
 
 describe("createRequestAction", () => {
   it("should return function", () => {
-    const requestActionTypes = createRequestActionTypes(XHRMethod.Get, "TEST");
+    const requestActionTypes = createActionType(XHRMethod.Get, "TEST");
     const requestAction = createRequestAction(requestActionTypes, "/test");
 
     expect(typeof requestAction).toEqual("function");
   });
 
   it("should return action with payload", () => {
-    const requestActionTypes = createRequestActionTypes(XHRMethod.Get, "TEST");
+    const requestActionTypes = createActionType(XHRMethod.Get, "TEST");
     const requestActionCreator = createRequestAction(requestActionTypes, "/test");
-    const { successCallback, payload, type } = requestActionCreator(undefined);
+    const { successCallback, payload, type } = requestActionCreator({ payload: { id: 1 } });
 
     expect(type).toEqual("GET_TEST_REQUEST");
-    expect(payload).toEqual(undefined);
+    expect(payload).toEqual({ id: 1 });
 
     const success = successCallback({ test: "test" });
 
     expect(success).toEqual({
       type: "GET_TEST_SUCCESS",
-      payload: { test: "test" },
+      data: { test: "test" },
     });
   });
 });

@@ -19,12 +19,6 @@ exports[`MainRoutes matches snapshot 1`] = `
       key="/"
       path="/"
     />
-    <Connect(PrivateRoute)
-      component={[Function]}
-      exact={true}
-      key="/"
-      path="/"
-    />
     <Route
       component={[Function]}
       path="*"

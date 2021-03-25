@@ -1,11 +1,12 @@
 import {
   XHRMethod,
+  createActionType,
   createRequestAction,
-  createRequestActionTypes,
+  
+  addParamsToURL,
 } from 'utils';
-import { addParamsToURL } from '.';
 
-const DELIVERY_REQUEST = createRequestActionTypes(XHRMethod.Post, 'DELIVERY_REQUEST');
+const DELIVERY_REQUEST = createActionType(XHRMethod.Post, 'DELIVERY_REQUEST');
 
 describe('addParamsToURL', () => {
   it('does not add additional props as params from action creator to the url', () => {

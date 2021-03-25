@@ -1,20 +1,25 @@
-import { fork, put, all } from "redux-saga/effects";
-import { showError } from "../actions/commonFlow";
+import { fork, put, all, take, cancel } from "redux-saga/effects";
+import { LOGOUT, showError } from "../actions/commonFlow";
 import watchLastPutSagaAction from "./putSaga";
 import watchLastPostSagaAction from "./postSaga";
 import watchLastGetSagaAction from "./getSaga";
 import watchLastDeleteSagaAction from "./deleteSaga";
 import watchLastPatchSagaAction from "./patchSaga";
 
-export default function* rootSaga() {
+export default function* rootSaga(): any {
   try {
-    yield all([
-      fork(watchLastPutSagaAction),
-      fork(watchLastPostSagaAction),
-      fork(watchLastGetSagaAction),
-      fork(watchLastDeleteSagaAction),
-      fork(watchLastPatchSagaAction),
-    ]);
+    while (true) {
+      const tasks = yield all([
+        fork(watchLastGetSagaAction),
+        fork(watchLastPutSagaAction),
+        fork(watchLastPatchSagaAction),
+        fork(watchLastPostSagaAction),
+        fork(watchLastDeleteSagaAction),
+      ]);
+
+      yield take(LOGOUT);
+      yield cancel([...tasks]);
+    }
   } catch (error) {
     yield put(showError(error));
   }

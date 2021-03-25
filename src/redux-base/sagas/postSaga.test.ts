@@ -2,14 +2,14 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import apiClient from "api/apiClient";
 import { showError } from "redux-base/actions";
 import {
-  createRequestActionTypes,
+  createActionType,
   createRequestAction,
   postActions,
   XHRMethod,
 } from "utils";
 import watchLastDeleteAction, { postSaga } from "./postSaga";
 
-const POST_ACTION = createRequestActionTypes(XHRMethod.Post, "ACTION", true);
+const POST_ACTION = createActionType(XHRMethod.Post, "ACTION", true);
 const postRequest = createRequestAction(POST_ACTION, "/post/:id/");
 
 describe("postSaga", () => {
@@ -45,7 +45,7 @@ describe("postSaga", () => {
           channel: undefined,
           action: {
             type: POST_ACTION.SUCCESS,
-            payload: { dataResponse: ["some data"] },
+            data: { dataResponse: ["some data"] },
           },
         },
       });
@@ -68,7 +68,7 @@ describe("postSaga", () => {
           channel: undefined,
           action: {
             type: POST_ACTION.FAILURE,
-            payload: { message: "Something went wrong" },
+            data: { message: "Something went wrong" },
           },
         },
       });
@@ -89,7 +89,7 @@ describe("postSaga", () => {
           channel: undefined,
           action: {
             type: POST_ACTION.FAILURE,
-            payload: { response: { data: "some data" } },
+            data: { response: { data: "some data" } },
           },
         },
       });

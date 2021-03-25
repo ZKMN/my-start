@@ -2,12 +2,7 @@
 
 exports[`routeHelpers matches snapshot routesConfig 1`] = `
 Object {
-  "privateRoutes": Array [
-    Object {
-      "component": [Function],
-      "path": "/",
-    },
-  ],
+  "privateRoutes": Array [],
   "publicRoutes": Array [
     Object {
       "component": [Function],

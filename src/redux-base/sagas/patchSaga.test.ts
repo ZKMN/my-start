@@ -2,14 +2,14 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import apiClient from "api/apiClient";
 import { showError } from "redux-base/actions";
 import {
-  createRequestActionTypes,
+  createActionType,
   createRequestAction,
   patchActions,
   XHRMethod,
 } from "utils";
 import watchLastDeleteAction, { patchSaga } from "./patchSaga";
 
-const PATCH_ACTION = createRequestActionTypes(XHRMethod.Patch, "ACTION", true);
+const PATCH_ACTION = createActionType(XHRMethod.Patch, "ACTION", true);
 const patchRequest = createRequestAction(PATCH_ACTION, "/patch/:id/");
 
 describe("patchSaga", () => {
@@ -45,7 +45,7 @@ describe("patchSaga", () => {
           channel: undefined,
           action: {
             type: PATCH_ACTION.SUCCESS,
-            payload: { dataResponse: ["some data"] },
+            data: { dataResponse: ["some data"] },
           },
         },
       });
@@ -68,7 +68,7 @@ describe("patchSaga", () => {
           channel: undefined,
           action: {
             type: PATCH_ACTION.FAILURE,
-            payload: { message: "Something went wrong" },
+            data: { message: "Something went wrong" },
           },
         },
       });
@@ -89,7 +89,7 @@ describe("patchSaga", () => {
           channel: undefined,
           action: {
             type: PATCH_ACTION.FAILURE,
-            payload: { response: { data: "some data" } },
+            data: { response: { data: "some data" } },
           },
         },
       });

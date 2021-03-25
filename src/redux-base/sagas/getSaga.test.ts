@@ -2,14 +2,14 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import apiClient from "api/apiClient";
 import { showError } from "redux-base/actions";
 import {
-  createRequestActionTypes,
+  createActionType,
   createRequestAction,
   getActions,
   XHRMethod,
 } from "utils";
 import watchLastDeleteAction, { getSaga } from "./getSaga";
 
-const GET_ACTIONS = createRequestActionTypes(XHRMethod.Get, "ACTION", true);
+const GET_ACTIONS = createActionType(XHRMethod.Get, "ACTION", true);
 const getRequest = createRequestAction(GET_ACTIONS, "/get");
 
 describe("getSaga", () => {
@@ -47,8 +47,7 @@ describe("getSaga", () => {
           channel: undefined,
           action: {
             type: GET_ACTIONS.SUCCESS,
-            payload: { dataResponse: ["some data"] },
-            meta: undefined,
+            data: { dataResponse: ["some data"] },
           },
         },
       });
@@ -71,8 +70,7 @@ describe("getSaga", () => {
           channel: undefined,
           action: {
             type: GET_ACTIONS.FAILURE,
-            payload: { message: "Something went wrong" },
-            meta: undefined,
+            data: { message: "Something went wrong" },
           },
         },
       });
@@ -93,8 +91,7 @@ describe("getSaga", () => {
           channel: undefined,
           action: {
             type: GET_ACTIONS.FAILURE,
-            payload: { response: { data: "some data" } },
-            meta: undefined,
+            data: { response: { data: "some data" } },
           },
         },
       });

@@ -1,7 +1,8 @@
 import { stringifyUrl } from "query-string";
-import { IRequestAction } from "utils";
 // @ts-ignore
 import path, { pathParams } from "path-params";
+
+import { IRequestAction } from "utils";
 
 // noParams - value for parallel request if we don't need to add params to endpoint
 export const addParamsToURL = (action: IRequestAction, noParams?: boolean) => {

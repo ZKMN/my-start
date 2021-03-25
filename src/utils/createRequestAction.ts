@@ -1,18 +1,16 @@
-import { ICreateRequestActionTypes } from "./createRequestActionTypes";
 import { StringifiableRecord } from "query-string";
+import { addActionToSagas, createActionType } from "utils";
 
-interface TActionCallbackResult {
+export interface IActionCallbackResult {
   type: string | undefined;
-  payload?: Record<string, unknown>;
+  data: any;
 }
 
 interface IRequestPayload {
-  payload?: any; 
-  routeParams?: any;
+  payload?: Record<string, unknown>; 
+  routeParams?: Record<string, unknown>;
   [key: string]: unknown; 
 }
-
-type TActionCallback = (payload: any) => TActionCallbackResult;
 
 export interface IRequestAction {
   type: string | undefined;
@@ -21,12 +19,12 @@ export interface IRequestAction {
   responseType?: string;
   queryParams?: StringifiableRecord;
   routeParams?: Record<string, unknown>;
-  successCallback: TActionCallback;
-  failureCallback?: TActionCallback;
+  successCallback: (response: unknown) => IActionCallbackResult;
+  failureCallback?: (response: unknown) => IActionCallbackResult;
 }
 
 export const createRequestAction = (
-  actionType: ICreateRequestActionTypes,
+  actionType: ReturnType<typeof createActionType>,
   endpoint: string,
   responseType?: string,
 ) => (
@@ -35,13 +33,15 @@ export const createRequestAction = (
 
   const { payload, routeParams, ...rest } = Object(requestPayload);
 
-  const failureCallback = (payload: any) => ({
+  addActionToSagas(actionType);
+
+  const failureCallback = (response: unknown) => ({
     type: actionType.FAILURE,
-    payload,
+    data: response,
   });
-  const successCallback = (payload: any) => ({
+  const successCallback = (response: unknown) => ({
     type: actionType.SUCCESS,
-    payload,
+    data: response,
   });
 
   const action: IRequestAction = { 
