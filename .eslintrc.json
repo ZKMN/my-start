@@ -28,6 +28,7 @@
       }
     ],
     "no-var": "error",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
     "arrow-body-style": 2,
     "no-multi-spaces": "error",
     "indent": ["error", 2, { "SwitchCase": 1 }],

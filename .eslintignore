@@ -5,3 +5,4 @@ public/*
 .eslintrc
 src/react-app-env.d.ts
 src/service-worker.ts
+src/serviceWorkerRegistration.ts

@@ -26,7 +26,7 @@ const homePage = produce(
         draft.isLoading = false;
         break;
       case RESET_REDUCER:
-        return draft;
+        return INITIAL_STATE;
     }
   },
   INITIAL_STATE,

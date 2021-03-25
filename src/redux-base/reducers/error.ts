@@ -21,7 +21,7 @@ const error = produce(
         break;
       case LOCATION_CHANGE:
       case RESET_REDUCER:
-        return draft;
+        return INITIAL_STATE;
     }
   }, 
   INITIAL_STATE,
