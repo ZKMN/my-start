@@ -1,4 +1,5 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { testSaga } from 'redux-saga-test-plan';
+
 import apiClient from "api/apiClient";
 import { showError } from "redux-base/actions";
 import {
@@ -7,35 +8,36 @@ import {
   putActions,
   XHRMethod,
 } from "utils";
-import watchLastDeleteAction, { putSaga } from "./putSaga";
+import watchLastPutSagaAction, { putSaga } from "./putSaga";
 
 const PUT_ACTION = createActionType("ACTION", XHRMethod.Put, true);
 const putRequest = createRequestAction(PUT_ACTION, "/put/:id/");
 
 describe("putSaga", () => {
-  describe("watchLastDeleteAction", () => {
-    it("listens putSaga", () => {
-      const gen = watchLastDeleteAction();
-
-      expect(gen.next().value).toEqual(takeLatest(putActions, putSaga));
+  describe('watchLastPutSagaAction', () => {
+    it('listens deleteSaga', () => {
+      testSaga(watchLastPutSagaAction)
+        .next()
+        .takeLatest(putActions, putSaga)
     });
 
-    it("throw error", () => {
-      const error = { response: { data: "some data" } };
+    it('throw error', () => {
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      const gen = watchLastDeleteAction();
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual(put(showError(error)));
+      testSaga(watchLastPutSagaAction)
+        .next()
+        .throw(error)
+        .put(showError(error)).next().isDone()
     });
   });
 
   describe("testing putSaga", () => {
     it("calls action.successCb", () => {
-      const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
-
-      expect(gen.next().value).toEqual(call(apiClient.put, "/put/15/?query=10", { id: 10 }));
+      const action = putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
 
       const response = {
         data: ['some data'],
@@ -44,61 +46,33 @@ describe("putSaga", () => {
         headers: {},
         config: {}, 
       };
-
-      expect(gen.next(response).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: PUT_ACTION.SUCCESS,
-            data: response,
-          },
-        },
-      });
+  
+      testSaga(putSaga, action)
+        .next()
+        .call(apiClient.put, '/put/15/?query=10', { id: 10 })
+        .next(response)
+        .put({
+          type: PUT_ACTION.SUCCESS,
+          data: response,
+        }).next().isDone()
     });
 
     it("fires error action if js error is thrown", () => {
-      const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      gen.next();
-
-      gen.next();
-
-      expect(gen.throw({ message: "Something went wrong" }).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: PUT_ACTION.FAILURE,
-            data: { message: "Something went wrong" },
-          },
-        },
-      });
-    });
-
-    it("returns error when js error is thrown with response", () => {
-      const error = { response: { data: "some data" } };
-
-      const gen = putSaga(putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: PUT_ACTION.FAILURE,
-            data: { response: { data: "some data" } },
-          },
-        },
-      });
+      const action = putRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+  
+      testSaga(putSaga, action)
+        .next()
+        .throw(error)
+        .put({
+          type: PUT_ACTION.FAILURE,
+          data: error,
+        }).next().isDone()
     });
   });
 });

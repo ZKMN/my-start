@@ -1,4 +1,5 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { testSaga } from 'redux-saga-test-plan';
+
 import apiClient from "api/apiClient";
 import { showError } from "redux-base/actions";
 import {
@@ -7,35 +8,36 @@ import {
   getActions,
   XHRMethod,
 } from "utils";
-import watchLastDeleteAction, { getSaga } from "./getSaga";
+import watchLastGetSagaAction, { getSaga } from "./getSaga";
 
-const GET_ACTIONS = createActionType("ACTION", XHRMethod.Get, true);
-const getRequest = createRequestAction(GET_ACTIONS, "/get");
+const GET_ACTION = createActionType("ACTION", XHRMethod.Get, true);
+const getRequest = createRequestAction(GET_ACTION, "/get");
 
 describe("getSaga", () => {
-  describe("watchLastDeleteAction", () => {
-    it("listens getSaga", () => {
-      const gen = watchLastDeleteAction();
-
-      expect(gen.next().value).toEqual(takeLatest(getActions, getSaga));
+  describe('watchLastGetSagaAction', () => {
+    it('listens getSaga', () => {
+      testSaga(watchLastGetSagaAction)
+        .next()
+        .takeLatest(getActions, getSaga).next().isDone()
     });
 
-    it("throw error", () => {
-      const error = { response: { data: "some data" } };
+    it('throw error', () => {
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      const gen = watchLastDeleteAction();
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual(put(showError(error)));
+      testSaga(watchLastGetSagaAction)
+        .next()
+        .throw(error)
+        .put(showError(error)).next().isDone()
     });
   });
 
   describe("testing getSaga", () => {
     it("calls action.successCb", () => {
-      const gen = getSaga(getRequest());
-
-      expect(gen.next().value).toEqual(call(apiClient.get, "/get"));
+      const action = getRequest();
 
       const response = {
         data: ['some data'],
@@ -44,63 +46,33 @@ describe("getSaga", () => {
         headers: {},
         config: {}, 
       };
-
-      expect(gen.next(response).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: GET_ACTIONS.SUCCESS,
-            data: response,
-          },
-        },
-      });
+  
+      testSaga(getSaga, action)
+        .next()
+        .call(apiClient.get, '/get')
+        .next(response)
+        .put({
+          type: GET_ACTION.SUCCESS,
+          data: response,
+        }).next().isDone()
     });
 
     it("fires error action if js error is thrown", () => {
-      const gen = getSaga(getRequest({ id: 10 }));
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      gen.next();
-
-      gen.next();
-
-      expect(
-        gen.throw({ message: "Something went wrong" }).value,
-      ).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: GET_ACTIONS.FAILURE,
-            data: { message: "Something went wrong" },
-          },
-        },
-      });
-    });
-
-    it("returns error when js error is thrown with response", () => {
-      const error = { response: { data: "some data" } };
-
-      const gen = getSaga(getRequest({ id: 10 }));
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: GET_ACTIONS.FAILURE,
-            data: { response: { data: "some data" } },
-          },
-        },
-      });
+      const action = getRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+  
+      testSaga(getSaga, action)
+        .next()
+        .throw(error)
+        .put({
+          type: GET_ACTION.FAILURE,
+          data: error,
+        }).next().isDone()
     });
   });
 });

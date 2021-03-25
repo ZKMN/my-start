@@ -1,4 +1,5 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { testSaga } from 'redux-saga-test-plan';
+
 import apiClient from "api/apiClient";
 import { showError } from "redux-base/actions";
 import {
@@ -7,35 +8,36 @@ import {
   patchActions,
   XHRMethod,
 } from "utils";
-import watchLastDeleteAction, { patchSaga } from "./patchSaga";
+import watchLastPatchSagaAction, { patchSaga } from "./patchSaga";
 
 const PATCH_ACTION = createActionType("ACTION", XHRMethod.Patch, true);
 const patchRequest = createRequestAction(PATCH_ACTION, "/patch/:id/");
 
 describe("patchSaga", () => {
-  describe("watchLastDeleteAction", () => {
-    it("listens patchSaga", () => {
-      const gen = watchLastDeleteAction();
-
-      expect(gen.next().value).toEqual(takeLatest(patchActions, patchSaga));
+  describe('watchLastPatchSagaAction', () => {
+    it('listens deleteSaga', () => {
+      testSaga(watchLastPatchSagaAction)
+        .next()
+        .takeLatest(patchActions, patchSaga).next().isDone()
     });
 
-    it("throw error", () => {
-      const error = { response: { data: "some data" } };
+    it('throw error', () => {
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      const gen = watchLastDeleteAction();
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual(put(showError(error)));
+      testSaga(watchLastPatchSagaAction)
+        .next()
+        .throw(error)
+        .put(showError(error)).next().isDone()
     });
   });
 
   describe("testing patchSaga", () => {
     it("calls action.successCb", () => {
-      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
-
-      expect(gen.next().value).toEqual(call(apiClient.patch, "/patch/15/?query=10", { id: 10 }));
+      const action = patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
 
       const response = {
         data: ['some data'],
@@ -44,63 +46,33 @@ describe("patchSaga", () => {
         headers: {},
         config: {}, 
       };
-
-      expect(gen.next(response).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: PATCH_ACTION.SUCCESS,
-            data: response,
-          },
-        },
-      });
+  
+      testSaga(patchSaga, action)
+        .next()
+        .call(apiClient.patch, '/patch/15/?query=10', { id: 10 })
+        .next(response)
+        .put({
+          type: PATCH_ACTION.SUCCESS,
+          data: response,
+        }).next().isDone()
     });
 
     it("fires error action if js error is thrown", () => {
-      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      gen.next();
-
-      gen.next();
-
-      expect(
-        gen.throw({ message: "Something went wrong" }).value,
-      ).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: PATCH_ACTION.FAILURE,
-            data: { message: "Something went wrong" },
-          },
-        },
-      });
-    });
-
-    it("returns error when js error is thrown with response", () => {
-      const error = { response: { data: "some data" } };
-
-      const gen = patchSaga(patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual({
-        "@@redux-saga/IO": true,
-        combinator: false,
-        type: "PUT",
-        payload: {
-          channel: undefined,
-          action: {
-            type: PATCH_ACTION.FAILURE,
-            data: { response: { data: "some data" } },
-          },
-        },
-      });
+      const action = patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+  
+      testSaga(patchSaga, action)
+        .next()
+        .throw(error)
+        .put({
+          type: PATCH_ACTION.FAILURE,
+          data: error,
+        }).next().isDone()
     });
   });
 });

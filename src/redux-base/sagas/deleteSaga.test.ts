@@ -1,4 +1,5 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { testSaga } from 'redux-saga-test-plan';
+
 import apiClient from 'api/apiClient';
 import { showError } from 'redux-base/actions';
 import {
@@ -7,35 +8,36 @@ import {
   deleteActions,
   XHRMethod,
 } from 'utils';
-import watchLastDeleteAction, { deleteSaga } from './deleteSaga';
+import watchLastDeleteSagaAction, { deleteSaga } from './deleteSaga';
 
 const DELETE_ACTION = createActionType('ACTION', XHRMethod.Delete, true);
 const deleteRequest = createRequestAction(DELETE_ACTION, '/delete/:id/');
 
 describe('deleteSaga', () => {
-  describe('watchLastDeleteAction', () => {
+  describe('watchLastDeleteSagaAction', () => {
     it('listens deleteSaga', () => {
-      const gen = watchLastDeleteAction();
-
-      expect(gen.next().value).toEqual(takeLatest(deleteActions, deleteSaga));
+      testSaga(watchLastDeleteSagaAction)
+        .next()
+        .takeLatest(deleteActions, deleteSaga).next().isDone()
     });
 
     it('throw error', () => {
-      const error = { response: { data: 'some data' } };
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      const gen = watchLastDeleteAction();
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual(put(showError(error)));
+      testSaga(watchLastDeleteSagaAction)
+        .next()
+        .throw(error)
+        .put(showError(error)).next().isDone()
     });
   });
 
   describe('testing deleteSaga', () => {
     it('calls action.successCb', () => {
-      const gen = deleteSaga(deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } }));
-
-      expect(gen.next().value).toEqual(call(apiClient.delete, '/delete/15/?query=10', { id: 10 }));
+      const action = deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
 
       const response = {
         data: ['some data'],
@@ -44,63 +46,33 @@ describe('deleteSaga', () => {
         headers: {},
         config: {}, 
       };
-      
-      expect(gen.next(response).value).toEqual({
-        '@@redux-saga/IO': true,
-        combinator: false,
-        type: 'PUT',
-        payload: {
-          channel: undefined,
-          action: {
-            type: DELETE_ACTION.SUCCESS,
-            data: response,
-          },
-        },
-      });
+  
+      testSaga(deleteSaga, action)
+        .next()
+        .call(apiClient.delete, '/delete/15/?query=10', { id: 10 })
+        .next(response)
+        .put({
+          type: DELETE_ACTION.SUCCESS,
+          data: response,
+        }).next().isDone()
     });
 
     it('fires error action if js error is thrown', () => {
-      const gen = deleteSaga(deleteRequest({ routeParams: { id: 15 }, id: 10 }));
+      const error = {
+        name: '',
+        message: '',
+        response: { data: 'some data' }, 
+      };
 
-      gen.next();
-
-      gen.next();
-
-      expect(
-        gen.throw({ message: 'Something went wrong' }).value,
-      ).toEqual({
-        '@@redux-saga/IO': true,
-        combinator: false,
-        type: 'PUT',
-        payload: {
-          channel: undefined,
-          action: {
-            type: DELETE_ACTION.FAILURE,
-            data: { message: 'Something went wrong' },
-          },
-        },
-      });
-    });
-
-    it('returns error when js error is thrown with response', () => {
-      const error = { response: { data: 'some data' } };
-
-      const gen = deleteSaga(deleteRequest({ routeParams: { id: 15 }, id: 10 }));
-
-      gen.next();
-
-      expect(gen.throw(error).value).toEqual({
-        '@@redux-saga/IO': true,
-        combinator: false,
-        type: 'PUT',
-        payload: {
-          channel: undefined,
-          action: {
-            type: DELETE_ACTION.FAILURE,
-            data: { response: { data: 'some data' } },
-          },
-        },
-      });
+      const action = deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+  
+      testSaga(deleteSaga, action)
+        .next()
+        .throw(error)
+        .put({
+          type: DELETE_ACTION.FAILURE,
+          data: error,
+        }).next().isDone()
     });
   });
 });

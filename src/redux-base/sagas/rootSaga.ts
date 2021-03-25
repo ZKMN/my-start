@@ -23,6 +23,6 @@ export default function* rootSaga(): any {
       yield cancel([...tasks]);
     }
   } catch (error) {
-    yield put(showError<AxiosError>(error.asd));
+    yield put(showError<AxiosError>(error));
   }
 }
