@@ -9,7 +9,7 @@ import {
 } from "utils";
 import watchLastDeleteAction, { postSaga } from "./postSaga";
 
-const POST_ACTION = createActionType(XHRMethod.Post, "ACTION", true);
+const POST_ACTION = createActionType("ACTION", XHRMethod.Post, true);
 const postRequest = createRequestAction(POST_ACTION, "/post/:id/");
 
 describe("postSaga", () => {
@@ -37,7 +37,15 @@ describe("postSaga", () => {
 
       expect(gen.next().value).toEqual(call(apiClient.post, "/post/15/?query=10", { id: 10 }));
 
-      expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
+      const response = {
+        data: ['some data'],
+        status: 200,
+        statusText: 'ok',
+        headers: {},
+        config: {}, 
+      };
+
+      expect(gen.next(response).value).toEqual({
         "@@redux-saga/IO": true,
         combinator: false,
         type: "PUT",
@@ -45,7 +53,7 @@ describe("postSaga", () => {
           channel: undefined,
           action: {
             type: POST_ACTION.SUCCESS,
-            data: { dataResponse: ["some data"] },
+            data: response,
           },
         },
       });

@@ -9,7 +9,7 @@ import {
 } from "utils";
 import watchLastDeleteAction, { getSaga } from "./getSaga";
 
-const GET_ACTIONS = createActionType(XHRMethod.Get, "ACTION", true);
+const GET_ACTIONS = createActionType("ACTION", XHRMethod.Get, true);
 const getRequest = createRequestAction(GET_ACTIONS, "/get");
 
 describe("getSaga", () => {
@@ -35,11 +35,17 @@ describe("getSaga", () => {
     it("calls action.successCb", () => {
       const gen = getSaga(getRequest());
 
-      expect(gen.next().value).toEqual(
-        call(apiClient.get, "/get"),
-      );
+      expect(gen.next().value).toEqual(call(apiClient.get, "/get"));
 
-      expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
+      const response = {
+        data: ['some data'],
+        status: 200,
+        statusText: 'ok',
+        headers: {},
+        config: {}, 
+      };
+
+      expect(gen.next(response).value).toEqual({
         "@@redux-saga/IO": true,
         combinator: false,
         type: "PUT",
@@ -47,7 +53,7 @@ describe("getSaga", () => {
           channel: undefined,
           action: {
             type: GET_ACTIONS.SUCCESS,
-            data: { dataResponse: ["some data"] },
+            data: response,
           },
         },
       });

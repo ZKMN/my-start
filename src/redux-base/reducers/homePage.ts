@@ -5,7 +5,7 @@ import {
   SHOW_ERROR,
   RESET_REDUCER,
 } from 'redux-base/actions';
-import { IActionCallbackResult } from 'utils';
+import { IAppAction } from 'utils';
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 };
 
 const homePage = produce(
-  (draft, action: IActionCallbackResult) => {
+  (draft, action: IAppAction) => {
     switch (action.type) {
       case SOME_ACTION.REQUEST:
         draft.isLoading = true;

@@ -5,16 +5,16 @@ import {
 
   RESET_REDUCER,
 } from 'redux-base/actions';
-import { IActionCallbackResult } from 'utils';
+import { IAppAction } from 'utils';
 
-interface IState {
+interface IReducerState {
   error: string | null | Record<string, unknown>;
 }
 
-const INITIAL_STATE: IState = { error: null };
+const INITIAL_STATE: IReducerState = { error: null };
 
 const error = produce(
-  (draft: IState, action: IActionCallbackResult) => {
+  (draft: IReducerState, action: IAppAction) => {
     switch (action.type) {
       case SHOW_ERROR:
         draft.error = action.data.error;

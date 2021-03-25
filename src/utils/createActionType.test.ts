@@ -9,18 +9,18 @@ describe("createActionType", () => {
     const TEST = createActionType("TEST", XHRMethod.Get, true);
 
     expect(TEST).toEqual({
-      REQUEST: `${XHRMethod.Get}_TEST_${RequestStatuses.Request}`,
-      SUCCESS: `${XHRMethod.Get}_TEST_${RequestStatuses.Success}`,
-      FAILURE: `${XHRMethod.Get}_TEST_${RequestStatuses.Failure}`,
+      REQUEST: `TEST_${XHRMethod.Get}_${RequestStatuses.Request}`,
+      SUCCESS: `TEST_${XHRMethod.Get}_${RequestStatuses.Success}`,
+      FAILURE: `TEST_${XHRMethod.Get}_${RequestStatuses.Failure}`,
     });
   });
 
-  it("should return object with right action types withot failure", () => {
+  it("should return object with right action types without failure", () => {
     const TEST = createActionType("TEST", XHRMethod.Get);
 
     expect(TEST).toEqual({
-      REQUEST: `${XHRMethod.Get}_TEST_${RequestStatuses.Request}`,
-      SUCCESS: `${XHRMethod.Get}_TEST_${RequestStatuses.Success}`,
+      REQUEST: `TEST_${XHRMethod.Get}_${RequestStatuses.Request}`,
+      SUCCESS: `TEST_${XHRMethod.Get}_${RequestStatuses.Success}`,
     });
   });
 });

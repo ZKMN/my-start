@@ -9,7 +9,7 @@ import {
 } from "utils";
 import watchLastDeleteAction, { patchSaga } from "./patchSaga";
 
-const PATCH_ACTION = createActionType(XHRMethod.Patch, "ACTION", true);
+const PATCH_ACTION = createActionType("ACTION", XHRMethod.Patch, true);
 const patchRequest = createRequestAction(PATCH_ACTION, "/patch/:id/");
 
 describe("patchSaga", () => {
@@ -37,7 +37,15 @@ describe("patchSaga", () => {
 
       expect(gen.next().value).toEqual(call(apiClient.patch, "/patch/15/?query=10", { id: 10 }));
 
-      expect(gen.next({ dataResponse: ["some data"] }).value).toEqual({
+      const response = {
+        data: ['some data'],
+        status: 200,
+        statusText: 'ok',
+        headers: {},
+        config: {}, 
+      };
+
+      expect(gen.next(response).value).toEqual({
         "@@redux-saga/IO": true,
         combinator: false,
         type: "PUT",
@@ -45,7 +53,7 @@ describe("patchSaga", () => {
           channel: undefined,
           action: {
             type: PATCH_ACTION.SUCCESS,
-            data: { dataResponse: ["some data"] },
+            data: response,
           },
         },
       });

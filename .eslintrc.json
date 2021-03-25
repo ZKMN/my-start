@@ -29,6 +29,7 @@
     ],
     "no-var": "error",
     "arrow-body-style": 2,
+    "no-multi-spaces": "error",
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "generator-star-spacing": [1, "after"],
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],

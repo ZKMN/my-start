@@ -1,4 +1,6 @@
 import { fork, put, all, take, cancel } from "redux-saga/effects";
+import { AxiosError } from "axios";
+
 import { LOGOUT, showError } from "../actions/commonFlow";
 import watchLastPutSagaAction from "./putSaga";
 import watchLastPostSagaAction from "./postSaga";
@@ -21,6 +23,6 @@ export default function* rootSaga(): any {
       yield cancel([...tasks]);
     }
   } catch (error) {
-    yield put(showError(error));
+    yield put(showError<AxiosError>(error.asd));
   }
 }

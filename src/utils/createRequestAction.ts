@@ -1,9 +1,9 @@
 import { StringifiableRecord } from "query-string";
 import { addActionToSagas, createActionType } from "utils";
 
-export interface IActionCallbackResult {
+export interface IAppAction<T = any> {
   type: string | undefined;
-  data: any;
+  data: T;
 }
 
 interface IRequestPayload {
@@ -19,8 +19,8 @@ export interface IRequestAction {
   responseType?: string;
   queryParams?: StringifiableRecord;
   routeParams?: Record<string, unknown>;
-  successCallback: (response: unknown) => IActionCallbackResult;
-  failureCallback?: (response: unknown) => IActionCallbackResult;
+  successCallback: <T>(response: T) => IAppAction<T>;
+  failureCallback?: <T>(response: T) => IAppAction<T>;
 }
 
 export const createRequestAction = (
@@ -35,12 +35,12 @@ export const createRequestAction = (
 
   addActionToSagas(actionType);
 
-  const failureCallback = (response: unknown) => ({
-    type: actionType.FAILURE,
+  const successCallback = <T>(response: T): IAppAction<T> => ({
+    type: actionType.SUCCESS,
     data: response,
   });
-  const successCallback = (response: unknown) => ({
-    type: actionType.SUCCESS,
+  const failureCallback = <T>(response: T): IAppAction<T> => ({
+    type: actionType.FAILURE,
     data: response,
   });
 

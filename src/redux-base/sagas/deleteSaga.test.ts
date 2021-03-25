@@ -9,7 +9,7 @@ import {
 } from 'utils';
 import watchLastDeleteAction, { deleteSaga } from './deleteSaga';
 
-const DELETE_ACTION = createActionType(XHRMethod.Delete, 'ACTION', true);
+const DELETE_ACTION = createActionType('ACTION', XHRMethod.Delete, true);
 const deleteRequest = createRequestAction(DELETE_ACTION, '/delete/:id/');
 
 describe('deleteSaga', () => {
@@ -37,7 +37,15 @@ describe('deleteSaga', () => {
 
       expect(gen.next().value).toEqual(call(apiClient.delete, '/delete/15/?query=10', { id: 10 }));
 
-      expect(gen.next({ dataResponse: ['some data'] }).value).toEqual({
+      const response = {
+        data: ['some data'],
+        status: 200,
+        statusText: 'ok',
+        headers: {},
+        config: {}, 
+      };
+      
+      expect(gen.next(response).value).toEqual({
         '@@redux-saga/IO': true,
         combinator: false,
         type: 'PUT',
@@ -45,7 +53,7 @@ describe('deleteSaga', () => {
           channel: undefined,
           action: {
             type: DELETE_ACTION.SUCCESS,
-            data: { dataResponse: ['some data'] },
+            data: response,
           },
         },
       });

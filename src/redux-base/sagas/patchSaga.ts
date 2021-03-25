@@ -1,20 +1,21 @@
 import { takeLatest, put, call } from "redux-saga/effects";
+import { AxiosResponse, AxiosError } from "axios";
+
 import { showError } from "redux-base/actions";
 import apiClient from "api/apiClient";
-
 import { IRequestAction, patchActions, addParamsToURL } from "utils";
 
 export function* patchSaga(action: IRequestAction) {
   try {
     const url = addParamsToURL(action);
-    const response: unknown = yield call(apiClient.patch, url, action.payload);
+    const response: AxiosResponse = yield call(apiClient.patch, url, action.payload);
 
-    yield put(action.successCallback(response));
+    yield put(action.successCallback<AxiosResponse>(response));
   } catch (error) {
     if (action.failureCallback) {
-      yield put(action.failureCallback(error));
+      yield put(action.failureCallback<AxiosError>(error));
     } else {
-      yield put(showError(error));
+      yield put(showError<AxiosError>(error));
     }
   }
 }
@@ -23,6 +24,6 @@ export default function* watchLastPatchAction() {
   try {
     yield takeLatest(patchActions, patchSaga);
   } catch (error) {
-    yield put(showError(error));
+    yield put(showError<AxiosError>(error));
   }
 }
