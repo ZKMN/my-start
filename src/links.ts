@@ -1,3 +1,5 @@
-export enum Pathnames {
+enum Links {
   Login = "/",
 }
+
+export default Links;

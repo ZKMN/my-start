@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import {
   Route,
   Redirect,
-  RouteProps,
-  RouteComponentProps,
 } from 'react-router-dom';
 
-import { Pathnames } from 'links';
+import { IAppRoute } from './routeHelpers';
+import { RootState } from 'AppRootComponent';
 
-interface IPrivateRoute extends RouteProps {
-  isLoggedIn?: boolean;
-  user?: Record<string, unknown>;
-  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+import Links from 'links';
+
+interface IPrivateRoute extends IAppRoute {
+  isLoggedIn: boolean;
+  user: Record<string, unknown>;
 }
 
 export const PrivateRoute = ({
@@ -35,7 +35,7 @@ export const PrivateRoute = ({
         return (
           <Redirect
             to={{
-              pathname: Pathnames.Login,
+              pathname: Links.Login,
               state: { redirectFrom: location.pathname },
             }}
           />
@@ -54,4 +54,7 @@ export const PrivateRoute = ({
   />
 );
 
-export default connect(state => ({}))(PrivateRoute);
+export default connect((state: RootState) => ({
+  isLoggedIn: true,
+  user: {},
+}))(PrivateRoute);

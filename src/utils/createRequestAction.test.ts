@@ -6,15 +6,15 @@ import {
 
 describe("createRequestAction", () => {
   it("should return function", () => {
-    const requestActionTypes = createActionType(XHRMethod.Get, "TEST");
-    const requestAction = createRequestAction(requestActionTypes, "/test");
+    const TEST = createActionType(XHRMethod.Get, "TEST");
+    const requestAction = createRequestAction(TEST, "/test");
 
     expect(typeof requestAction).toEqual("function");
   });
 
   it("should return action with payload", () => {
-    const requestActionTypes = createActionType(XHRMethod.Get, "TEST");
-    const requestActionCreator = createRequestAction(requestActionTypes, "/test");
+    const TEST = createActionType(XHRMethod.Get, "TEST");
+    const requestActionCreator = createRequestAction(TEST, "/test");
     const { successCallback, payload, type } = requestActionCreator({ payload: { id: 1 } });
 
     expect(type).toEqual("GET_TEST_REQUEST");

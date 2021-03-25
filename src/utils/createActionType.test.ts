@@ -6,9 +6,9 @@ import {
 
 describe("createActionType", () => {
   it("should return object with right action types with failure", () => {
-    const requestActionTypesTest = createActionType(XHRMethod.Get, "TEST", true);
+    const TEST = createActionType("TEST", XHRMethod.Get, true);
 
-    expect(requestActionTypesTest).toEqual({
+    expect(TEST).toEqual({
       REQUEST: `${XHRMethod.Get}_TEST_${RequestStatuses.Request}`,
       SUCCESS: `${XHRMethod.Get}_TEST_${RequestStatuses.Success}`,
       FAILURE: `${XHRMethod.Get}_TEST_${RequestStatuses.Failure}`,
@@ -16,9 +16,9 @@ describe("createActionType", () => {
   });
 
   it("should return object with right action types withot failure", () => {
-    const requestActionTypesTest = createActionType(XHRMethod.Get, "TEST");
+    const TEST = createActionType("TEST", XHRMethod.Get);
 
-    expect(requestActionTypesTest).toEqual({
+    expect(TEST).toEqual({
       REQUEST: `${XHRMethod.Get}_TEST_${RequestStatuses.Request}`,
       SUCCESS: `${XHRMethod.Get}_TEST_${RequestStatuses.Success}`,
     });

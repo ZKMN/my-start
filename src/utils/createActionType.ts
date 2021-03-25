@@ -12,14 +12,14 @@ export enum XHRMethod {
 }
 
 export const createActionType = (
-  method: XHRMethod,
   actionName: string,
+  method: XHRMethod,
   addFailureType?: boolean,
 ) => {
   const actionTypes = {
-    REQUEST: `${method}_${actionName}_${RequestStatuses.Request}`,
-    SUCCESS: `${method}_${actionName}_${RequestStatuses.Success}`,
-    ...(addFailureType && { FAILURE: `${method}_${actionName}_${RequestStatuses.Failure}` }),
+    REQUEST: `${actionName}_${method}_${RequestStatuses.Request}`,
+    SUCCESS: `${actionName}_${method}_${RequestStatuses.Success}`,
+    ...(addFailureType && { FAILURE: `${actionName}_${method}_${RequestStatuses.Failure}` }),
   }
 
   return actionTypes;

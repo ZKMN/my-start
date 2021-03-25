@@ -6,26 +6,26 @@ import {
 } from 'react-router-dom';
 
 import ConnectedPrivateRoute from './PrivateRoute';
-import {} from 'containers';
-import { Pathnames } from 'links';
+import { Login } from 'containers';
+import Links from 'links';
 
 export const routesConfig = {
   privateRoutes: [],
   publicRoutes: [{
     path: '/',
-    component: () => <div>Login page</div>,
+    component: Login,
   }, {
-    path: Pathnames.Login,
-    component: () => <div>Login page</div>,
+    path: Links.Login,
+    component: Login,
   }],
 };
 
-interface IRouter extends RouteProps {
+export interface IAppRoute extends RouteProps {
+  component: React.FC<RouteComponentProps>;
   path: string;
-  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
-export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter) => (
+export const getPublicRoutes = (routes: IAppRoute[]) => routes.map(({ path, component }: IAppRoute) => (
   <Route
     exact
     key={path}
@@ -34,7 +34,7 @@ export const getPublicRoutes = (routes: IRouter[]) => routes.map(({ path, compon
   />
 ));
 
-export const getPrivateRoutes = (routes: IRouter[]) => routes.map(({ path, component }: IRouter) => (
+export const getPrivateRoutes = (routes: IAppRoute[]) => routes.map(({ path, component }: IAppRoute) => (
   <ConnectedPrivateRoute
     exact
     key={path}

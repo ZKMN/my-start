@@ -11,7 +11,7 @@ import {
 
 describe('addActionToSagas', () => {
   it('adds GET actions to getActions array', () => {
-    const TEST_GET = createActionType(XHRMethod.Get, 'TEST');
+    const TEST_GET = createActionType('TEST', XHRMethod.Get);
     addActionToSagas(TEST_GET);
 
     const getAction = getActions.find(action => action === TEST_GET.REQUEST);
@@ -19,7 +19,7 @@ describe('addActionToSagas', () => {
   });
 
   it('adds POST actions to postActions array', () => {
-    const TEST_POST = createActionType(XHRMethod.Post, 'TEST');
+    const TEST_POST = createActionType('TEST', XHRMethod.Post);
     addActionToSagas(TEST_POST);
 
     const saveAction = postActions.find(action => action === TEST_POST.REQUEST);
@@ -27,7 +27,7 @@ describe('addActionToSagas', () => {
   });
 
   it('adds PUT actions to putActions array', () => {
-    const TEST_PUT = createActionType(XHRMethod.Put, 'TEST');
+    const TEST_PUT = createActionType('TEST', XHRMethod.Put);
     addActionToSagas(TEST_PUT);
 
     const updateAction = putActions.find(action => action === TEST_PUT.REQUEST);
@@ -35,7 +35,7 @@ describe('addActionToSagas', () => {
   });
 
   it('adds DELETE actions to deleteActions array', () => {
-    const TEST_DELETE = createActionType(XHRMethod.Delete, 'TEST');
+    const TEST_DELETE = createActionType('TEST', XHRMethod.Delete);
     addActionToSagas(TEST_DELETE);
 
     const deleteAction = deleteActions.find(action => action === TEST_DELETE.REQUEST);

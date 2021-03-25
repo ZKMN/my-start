@@ -9,7 +9,7 @@ import { IActionCallbackResult } from 'utils';
 
 const INITIAL_STATE = {
   isLoading: false,
-  someData: [],
+  someData: null,
 };
 
 const homePage = produce(
