@@ -35,7 +35,7 @@ describe('addActionToSagas', () => {
     expect(updateAction).toBe(TEST_PUT.REQUEST);
   });
 
-  it('adds PATCH actions to deleteActions array', () => {
+  it('adds PATCH actions to patchActions array', () => {
     const TEST_PATCH = createActionType('TEST', XHRMethod.Patch);
     addActionToSagas(TEST_PATCH);
 

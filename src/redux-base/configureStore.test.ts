@@ -1,8 +1,10 @@
-import { BrowserHistory } from "history";
 import { configureStore } from "./configureStore";
+import { routerTestProps } from 'utils';
+
+const { history } = routerTestProps();
 
 describe("configureStore", () => {
   it("matches snapshot configureStore", () => {
-    expect(configureStore({} as BrowserHistory)).toMatchSnapshot();
+    expect(configureStore(history)).toMatchSnapshot();
   });
 });
