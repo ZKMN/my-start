@@ -1,4 +1,4 @@
-import produce from "immer"
+import produce from "immer";
 import { LOCATION_CHANGE } from 'react-router-redux';
 import {
   SHOW_ERROR,
@@ -25,6 +25,6 @@ const error = produce(
     }
   }, 
   INITIAL_STATE,
-)
+);
 
 export default error;

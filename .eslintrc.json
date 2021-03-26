@@ -28,7 +28,9 @@
       }
     ],
     "no-var": "error",
+    "semi": ["error", "always"],
     "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "quote-props": ["error", "as-needed"],
     "arrow-body-style": 2,
     "no-multi-spaces": "error",
     "indent": ["error", 2, { "SwitchCase": 1 }],
@@ -40,6 +42,7 @@
     "object-shorthand": 2,
     "object-curly-newline": ["error", { "multiline": true }],
     "object-curly-spacing": ["error", "always"],
+    "object-property-newline": "error",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off"

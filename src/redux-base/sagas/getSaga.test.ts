@@ -18,7 +18,7 @@ describe("getSaga", () => {
     it('listens getSaga', () => {
       testSaga(watchLastGetSagaAction)
         .next()
-        .takeLatest(getActions, getSaga).next().isDone()
+        .takeLatest(getActions, getSaga).next().isDone();
     });
 
     it('throw error', () => {
@@ -31,7 +31,7 @@ describe("getSaga", () => {
       testSaga(watchLastGetSagaAction)
         .next()
         .throw(error)
-        .put(showError(error)).next().isDone()
+        .put(showError(error)).next().isDone();
     });
   });
 
@@ -54,7 +54,7 @@ describe("getSaga", () => {
         .put({
           type: GET_ACTION.SUCCESS,
           data: response,
-        }).next().isDone()
+        }).next().isDone();
     });
 
     it("fires error action if js error is thrown", () => {
@@ -64,7 +64,11 @@ describe("getSaga", () => {
         response: { data: 'some data' }, 
       };
 
-      const action = getRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = getRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
   
       testSaga(getSaga, action)
         .next()
@@ -72,7 +76,7 @@ describe("getSaga", () => {
         .put({
           type: GET_ACTION.FAILURE,
           data: error,
-        }).next().isDone()
+        }).next().isDone();
     });
   });
 });

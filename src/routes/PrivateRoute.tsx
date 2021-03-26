@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import {
   Route,
   Redirect,
+  RouteProps,
+  RouteComponentProps,
 } from 'react-router-dom';
 
-import { IAppRoute } from './routeHelpers';
-import { RootState } from 'AppRootComponent';
-
+import { RootState } from 'index';
 import Links from 'links';
 
-interface IPrivateRoute extends IAppRoute {
+interface IPrivateRoute extends RouteProps {
   isLoggedIn: boolean;
   user: Record<string, unknown>;
+  component: React.FC<RouteComponentProps>
 }
 
 export const PrivateRoute = ({

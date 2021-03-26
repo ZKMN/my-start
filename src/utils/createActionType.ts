@@ -20,7 +20,7 @@ export const createActionType = (
     REQUEST: `${actionName}_${method}_${RequestStatuses.Request}`,
     SUCCESS: `${actionName}_${method}_${RequestStatuses.Success}`,
     ...(addFailureType && { FAILURE: `${actionName}_${method}_${RequestStatuses.Failure}` }),
-  }
+  };
 
   return actionTypes;
 };

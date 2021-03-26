@@ -1,5 +1,5 @@
-import { stringifyUrl } from "query-string";
 import Route from 'route-parser';
+import { stringifyUrl } from "query-string";
 
 import { IRequestAction } from "utils";
 
@@ -14,7 +14,14 @@ export const addParamsToURL = (action: IRequestAction) => {
   const urlWithRouteParams = route.reverse(routeParams) || '';
 
   return stringifyUrl(
-    { url: urlWithRouteParams, query: queryParams },
-    { skipNull: true, skipEmptyString: true, arrayFormat: "comma" },
+    {
+      url: urlWithRouteParams,
+      query: queryParams, 
+    },
+    {
+      skipNull: true,
+      skipEmptyString: true,
+      arrayFormat: "comma", 
+    },
   );
 };

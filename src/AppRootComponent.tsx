@@ -1,18 +1,20 @@
-import React from 'react';
-import { Provider } from 'react-redux';
 import { Route } from 'react-router';
-import { createBrowserHistory } from "history";
+import { Provider } from 'react-redux';
+import { BrowserHistory } from "history";
 import { ConnectedRouter } from 'connected-react-router';
 
 import { configureStore } from './redux-base/configureStore';
 import { MainRoutes } from './routes/MainRoutes';
 
-const history = createBrowserHistory();
-const store = configureStore(history);
+export interface IAppRootComponent {
+  history: BrowserHistory,
+  store: ReturnType<typeof configureStore>
+}
 
-export type RootState = ReturnType<typeof store.getState>;
-
-export const AppRootComponent = () => (
+export const AppRootComponent = ({
+  history,
+  store,
+}: IAppRootComponent) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Route

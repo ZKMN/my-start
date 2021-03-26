@@ -18,7 +18,7 @@ describe("patchSaga", () => {
     it('listens deleteSaga', () => {
       testSaga(watchLastPatchSagaAction)
         .next()
-        .takeLatest(patchActions, patchSaga).next().isDone()
+        .takeLatest(patchActions, patchSaga).next().isDone();
     });
 
     it('throw error', () => {
@@ -31,13 +31,17 @@ describe("patchSaga", () => {
       testSaga(watchLastPatchSagaAction)
         .next()
         .throw(error)
-        .put(showError(error)).next().isDone()
+        .put(showError(error)).next().isDone();
     });
   });
 
   describe("testing patchSaga", () => {
     it("calls action.successCb", () => {
-      const action = patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = patchRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
 
       const response = {
         data: ['some data'],
@@ -54,7 +58,7 @@ describe("patchSaga", () => {
         .put({
           type: PATCH_ACTION.SUCCESS,
           data: response,
-        }).next().isDone()
+        }).next().isDone();
     });
 
     it("fires error action if js error is thrown", () => {
@@ -64,7 +68,11 @@ describe("patchSaga", () => {
         response: { data: 'some data' }, 
       };
 
-      const action = patchRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = patchRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
   
       testSaga(patchSaga, action)
         .next()
@@ -72,7 +80,7 @@ describe("patchSaga", () => {
         .put({
           type: PATCH_ACTION.FAILURE,
           data: error,
-        }).next().isDone()
+        }).next().isDone();
     });
   });
 });

@@ -18,7 +18,7 @@ describe('deleteSaga', () => {
     it('listens deleteSaga', () => {
       testSaga(watchLastDeleteSagaAction)
         .next()
-        .takeLatest(deleteActions, deleteSaga).next().isDone()
+        .takeLatest(deleteActions, deleteSaga).next().isDone();
     });
 
     it('throw error', () => {
@@ -31,13 +31,17 @@ describe('deleteSaga', () => {
       testSaga(watchLastDeleteSagaAction)
         .next()
         .throw(error)
-        .put(showError(error)).next().isDone()
+        .put(showError(error)).next().isDone();
     });
   });
 
   describe('testing deleteSaga', () => {
     it('calls action.successCb', () => {
-      const action = deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = deleteRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
 
       const response = {
         data: ['some data'],
@@ -54,7 +58,7 @@ describe('deleteSaga', () => {
         .put({
           type: DELETE_ACTION.SUCCESS,
           data: response,
-        }).next().isDone()
+        }).next().isDone();
     });
 
     it('fires error action if js error is thrown', () => {
@@ -64,7 +68,11 @@ describe('deleteSaga', () => {
         response: { data: 'some data' }, 
       };
 
-      const action = deleteRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = deleteRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
   
       testSaga(deleteSaga, action)
         .next()
@@ -72,7 +80,7 @@ describe('deleteSaga', () => {
         .put({
           type: DELETE_ACTION.FAILURE,
           data: error,
-        }).next().isDone()
+        }).next().isDone();
     });
   });
 });

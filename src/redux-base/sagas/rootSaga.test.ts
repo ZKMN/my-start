@@ -36,6 +36,6 @@ describe('rootSaga', () => {
     testSaga(rootSaga)
       .next()
       .throw(error)
-      .put(showError(error)).next().isDone()
+      .put(showError(error)).next().isDone();
   });
 });

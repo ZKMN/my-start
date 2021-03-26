@@ -1,8 +1,8 @@
-import React from 'react';
+import { Key, FC } from 'react';
 import {
   Route,
   RouteProps,
-  RouteComponentProps, 
+  RouteComponentProps,
 } from 'react-router-dom';
 
 import ConnectedPrivateRoute from './PrivateRoute';
@@ -20,25 +20,20 @@ export const routesConfig = {
   }],
 };
 
-export interface IAppRoute extends RouteProps {
-  component: React.FC<RouteComponentProps>;
-  path: string;
-}
-
-export const getPublicRoutes = (routes: IAppRoute[]) => routes.map(({ path, component }: IAppRoute) => (
+export const getPublicRoutes = (routes: RouteProps[]) => routes.map(({ path, component }: RouteProps) => (
   <Route
     exact
-    key={path}
+    key={path as Key}
     path={path}
-    component={component}
+    component={component as FC}
   />
 ));
 
-export const getPrivateRoutes = (routes: IAppRoute[]) => routes.map(({ path, component }: IAppRoute) => (
+export const getPrivateRoutes = (routes: RouteProps[]) => routes.map(({ path, component }: RouteProps) => (
   <ConnectedPrivateRoute
     exact
-    key={path}
+    key={path as Key}
     path={path}
-    component={component}
+    component={component as FC<RouteComponentProps>}
   />
 ));

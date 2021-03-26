@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { RootState } from 'AppRootComponent';
+import { RootState } from 'index';
 
 const getRoot = (state: RootState) => state.homePage;
 

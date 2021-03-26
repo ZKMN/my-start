@@ -1,4 +1,4 @@
-import produce from "immer"
+import produce from "immer";
 import {
   SOME_ACTION,
 
@@ -30,6 +30,6 @@ const homePage = produce(
     }
   },
   INITIAL_STATE,
-)
+);
 
 export default homePage;

@@ -1,13 +1,18 @@
-import { shallow } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { RouteChildrenProps } from 'react-router-dom';
+
 import { MainRoutes } from './MainRoutes';
+import { routerTestProps } from 'utils';
 
-let wrapper: any;
+let wrapper: ShallowWrapper;
 
-const props: any = {
-  location: {},
-  history: {},
-  match: {},
+const { history, location, match } = routerTestProps();
+
+const props: RouteChildrenProps = {
+  location,
+  history,
+  match,
 };
 
 describe('MainRoutes', () => {

@@ -1,5 +1,3 @@
-import React from "react";
-
 export const NotFoundPage = () => (
   <div
     style={{
@@ -10,7 +8,6 @@ export const NotFoundPage = () => (
       color: "#ffffff",
       fontSize: "3rem",
       fontWeight: "bold",
-      fontFamily: "Apertura",
     }}
   >
     Page Not Found

@@ -18,7 +18,7 @@ describe("postSaga", () => {
     it('listens deleteSaga', () => {
       testSaga(watchLastPostSagaAction)
         .next()
-        .takeLatest(postActions, postSaga).next().isDone()
+        .takeLatest(postActions, postSaga).next().isDone();
     });
 
     it('throw error', () => {
@@ -31,13 +31,17 @@ describe("postSaga", () => {
       testSaga(watchLastPostSagaAction)
         .next()
         .throw(error)
-        .put(showError(error)).next().isDone()
+        .put(showError(error)).next().isDone();
     });
   });
 
   describe("testing postSaga", () => {
     it("calls action.successCb", () => {
-      const action = postRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = postRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
 
       const response = {
         data: ['some data'],
@@ -54,7 +58,7 @@ describe("postSaga", () => {
         .put({
           type: POST_ACTION.SUCCESS,
           data: response,
-        }).next().isDone()
+        }).next().isDone();
     });
 
     it("fires error action if js error is thrown", () => {
@@ -64,7 +68,11 @@ describe("postSaga", () => {
         response: { data: 'some data' }, 
       };
 
-      const action = postRequest({ query: 10, routeParams: { id: 15 }, payload: { id: 10 } });
+      const action = postRequest({
+        query: 10,
+        routeParams: { id: 15 },
+        payload: { id: 10 }, 
+      });
   
       testSaga(postSaga, action)
         .next()
@@ -72,7 +80,7 @@ describe("postSaga", () => {
         .put({
           type: POST_ACTION.FAILURE,
           data: error,
-        }).next().isDone()
+        }).next().isDone();
     });
   });
 });

@@ -1,8 +1,7 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import { PrivateRoute } from './PrivateRoute';
 
-let wrapper: any;
+let wrapper: ShallowWrapper;
 
 const props = {
   component: () => <div />,
