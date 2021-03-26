@@ -4,6 +4,7 @@ import {
 
   getActions,
   postActions,
+  patchActions,
   putActions,
   deleteActions,
   addActionToSagas,
@@ -32,6 +33,14 @@ describe('addActionToSagas', () => {
 
     const updateAction = putActions.find(action => action === TEST_PUT.REQUEST);
     expect(updateAction).toBe(TEST_PUT.REQUEST);
+  });
+
+  it('adds PATCH actions to deleteActions array', () => {
+    const TEST_PATCH = createActionType('TEST', XHRMethod.Patch);
+    addActionToSagas(TEST_PATCH);
+
+    const patchAction = patchActions.find(action => action === TEST_PATCH.REQUEST);
+    expect(patchAction).toBe(TEST_PATCH.REQUEST);
   });
 
   it('adds DELETE actions to deleteActions array', () => {

@@ -6,7 +6,7 @@ import {
   addParamsToURL,
 } from 'utils';
 
-const DELIVERY_REQUEST = createActionType('DELIVERY_REQUEST', XHRMethod.Post);
+const REQUEST_POST = createActionType('REQUEST', XHRMethod.Post);
 
 describe('addParamsToURL', () => {
   it('does not add additional props as params from action creator to the url', () => {
@@ -14,8 +14,8 @@ describe('addParamsToURL', () => {
     const url = '/v1/delivery';
     const returnedUrl = '/v1/delivery';
 
-    const getDeliveryRequest = createRequestAction(DELIVERY_REQUEST, url);
-    const filter = getDeliveryRequest({
+    const postRequest = createRequestAction(REQUEST_POST, url);
+    const filter = postRequest({
       payload: {
         a: 1,
         b: 2,
@@ -29,8 +29,8 @@ describe('addParamsToURL', () => {
     const url = '/v1/delivery/:id/slots?slotId={slotId}';
     const returnedUrl = '/v1/delivery/50/slots?slotId=25';
 
-    const getDeliveryRequest = createRequestAction(DELIVERY_REQUEST, url);
-    const filter = getDeliveryRequest({
+    const postRequest = createRequestAction(REQUEST_POST, url);
+    const filter = postRequest({
       routeParams: { id: 50 },
       slotId: 25,
     });
@@ -42,8 +42,8 @@ describe('addParamsToURL', () => {
     const url = '/v1/delivery/:id/slots/:slotId';
     const returnedUrl = '/v1/delivery/50/slots/25';
 
-    const getDeliveryRequest = createRequestAction(DELIVERY_REQUEST, url);
-    const filter = getDeliveryRequest({
+    const postRequest = createRequestAction(REQUEST_POST, url);
+    const filter = postRequest({
       routeParams: {
         id: 50,
         slotId: 25,
@@ -57,8 +57,8 @@ describe('addParamsToURL', () => {
     const url = '/v1/delivery?limit={limit}&offset={offset}';
     const returnedUrl = '/v1/delivery?limit=50&offset=100';
 
-    const getDeliveryRequest = createRequestAction(DELIVERY_REQUEST, url);
-    const filter = getDeliveryRequest({
+    const postRequest = createRequestAction(REQUEST_POST, url);
+    const filter = postRequest({
       limit: 50,
       offset: 100,
     });
@@ -70,8 +70,8 @@ describe('addParamsToURL', () => {
     const url = '/v1/delivery';
     const returnedUrl = '/v1/delivery?limit=50&offset=100';
 
-    const getDeliveryRequest = createRequestAction(DELIVERY_REQUEST, url);
-    const filter = getDeliveryRequest({
+    const postRequest = createRequestAction(REQUEST_POST, url);
+    const filter = postRequest({
       limit: 50,
       offset: 100,
     });
