@@ -2,11 +2,11 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from "history";
 
-import { configureStore } from './redux-base/configureStore';
-import { AppRootComponent } from './AppRootComponent';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
+import { configureStore } from 'redux-base/configureStore';
+import { AppRootComponent } from 'AppRootComponent';
+import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
+import reportWebVitals from 'reportWebVitals';
+import 'index.css';
 
 const history = createBrowserHistory();
 const store = configureStore(history);

@@ -12,7 +12,7 @@ import Links from 'links';
 
 interface IPrivateRoute extends RouteProps {
   isLoggedIn: boolean;
-  user: Record<string, unknown>;
+  user: Record<string, unknown> | null;
   component: React.FC<RouteComponentProps>
 }
 
@@ -56,6 +56,6 @@ export const PrivateRoute = ({
 );
 
 export default connect((state: RootState) => ({
-  isLoggedIn: true,
-  user: {},
+  isLoggedIn: state.login.isLoggedIn,
+  user: state.login.user,
 }))(PrivateRoute);
